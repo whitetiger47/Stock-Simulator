@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+
+<!-- @author Raj_Valand-->
+
+<html xmlns:thf="https://www.thymeleaf.org">
+<head>
+    <title>User signin</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <style>
+        a:link, a:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid green;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: green;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Use Sign In</h1>
+<a href="/user_signup">User Signup Page</a>
+<a href="/admin_signin">Admin Signin Page</a> <br> <br>
+
+<h1> Login Page</h1>
+
+
+<form action="/user_home" method="post" thf:object="${user}">
+    Enter username: <input id="name" name="name" placeholder="userid" required="required" thf:field="*{email}"
+                           type="text"> <br>
+    Enter password: <input id="password" name="password" placeholder="password" required="required"
+                           thf:field="*{password}"
+                           type="text"><br><br><br>
+
+    <button type="submit">Login</button>
+</form>
+<<<<<<< HEAD
+<a th:href="@{/forgot_password}">Forgot your password?</a>
+=======
+<a th:href="@{'/forgot_password'}">Forgot your password?</a>
+>>>>>>> 7deab3678da4d35fbc8f1b4b0d46d508d438a6a2
+</body>
+</html>

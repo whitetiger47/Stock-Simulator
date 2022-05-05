@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<!-- @author abhishekuppe -->
+
+<html lang="end" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Upload</title>
+</head>
+<body>
+<form action="#" enctype="multipart/form-data" method="post" th:action="@{/csv_upload}" th:object="${stockCSVFile}">
+    <div>Upload CSV File</div>
+    <input accept=".csv" id="csv_upload" required="required" th:field="*{file}" type="file"/>
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

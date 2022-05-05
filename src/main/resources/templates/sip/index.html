@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- @author abhishekuppe -->
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          rel="stylesheet">
+
+</head>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div>
+
+    <div>
+        SIPS
+    </div>
+
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>%Change</td>
+                <td>Value</td>
+                <td>Monthly Schedule</td>
+            </tr>
+            </thead>
+            <tbody th:each="sip : ${sips}">
+            <tr>
+                <td th:text="${sip.getName()}"></td>
+                <td th:text="${sip.getChange()}"></td>
+                <td th:text="${sip.getPrice()}"></td>
+                <td th:text="${sip.getMonth_schedule()}"></td>
+                <td>
+                    <button><a th:href="@{'/sip/' + ${sip.getId()} +'/'}">Delete</a>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+    <div>Baskets</div>
+    <span th:each="basket : ${baskets}">
+        <div th:text="${basket.getName()}"></div>
+        <button th:attr="onclick=|addToSIP('${basket.id}', '${basket.name}', '${basket.price}')|">Add to sip</button>
+    </span>
+
+
+    <br/>
+    <br/>
+    <br/>
+
+    <form action="/sip" method="post" th:object="${sip}">
+        <p> SIP Name </p> <input required="required" th:field="*{name}" type="text"/>
+        <input id="sipValues" th:field="*{custom_table_value}" type="hidden"/>
+
+        <p> Monthly Schedule </p> <input required="required" th:field="*{month_schedule}" type="number"/>
+
+        <table border="1">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Value</td>
+                <td>Delete</td>
+            </tr>
+            </thead>
+            <tbody id="sipTable">
+            </tbody>
+        </table>
+
+        <button onclick="submitJSON()" type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    function submitJSON() {
+        let string = "";
+        let table = document.getElementById("sipTable");
+        for (let i = 0; i < table.childElementCount; i++) {
+            if (i === table.childElementCount - 1) {
+                string += table.children[i].children[0].innerText
+            } else {
+                string += table.children[i].children[0].innerText + "_"
+            }
+        }
+        document.getElementById("sipValues").value = string;
+    }
+
+    function addToSIP(id, name, price) {
+        let tr = document.createElement("tr");
+
+        let td1 = document.createElement("td");
+        td1.innerText = id;
+
+        let td2 = document.createElement("td");
+        td2.innerText = name;
+
+        let td3 = document.createElement("td");
+        td3.innerText = price;
+
+        let td4 = document.createElement("td");
+
+        let deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.onclick = (e) => {
+            e.currentTarget.parentElement.parentElement.remove();
+        }
+        td4.append(deleteButton);
+
+        tr.append(td1);
+        tr.append(td2);
+        tr.append(td3);
+        tr.append(td4);
+        document.getElementById("sipTable").append(tr);
+    }
+
+</script>
+
+
+<script crossorigin="anonymous"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

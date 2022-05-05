@@ -1,0 +1,66 @@
+image: maven:3.3.9-jdk-8
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - dalfcs_docker_kvm
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+
+test:
+  stage: test
+  tags:
+    - dalfcs_docker_kvm
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+
+deploy-test:
+  image: ruby:2.4
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_TEST_APPNAME --api-key=$HEROKU_APIKEY
+    - export HEROKU_API_KEY=$HEROKU_APIKEY
+    - heroku run --app $HEROKU_TEST_APPNAME migrate
+  environment:
+      name: TEST
+      url: $HEROKU_TEST_HOST
+  tags:
+    - dalfcs_docker_kvm
+  only:
+    - /develop/
+
+deploy-prod:
+  image: ruby:2.4
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_PRODUCTION_APPNAME --api-key=$HEROKU_APIKEY
+    - export HEROKU_API_KEY=$HEROKU_APIKEY
+    - heroku run --app $HEROKU_PRODUCTION_APPNAME migrate
+  environment:
+    name: PRODUCTION
+    url: $HEROKU_PRODUCTION_HOST
+  tags:
+    - dalfcs_docker_kvm
+  only:
+    - /master/
+
+after_script:
+  - echo "Deployed"

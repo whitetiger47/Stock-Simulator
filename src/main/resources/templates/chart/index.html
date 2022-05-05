@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- @author abhishekuppe -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script crossorigin="anonymous"
+            integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ=="
+            referrerpolicy="no-referrer"
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+    <title>Stock Chart</title>
+</head>
+<body>
+
+<canvas id="stockChart"></canvas>
+
+<script th:inline="javascript" type="text/javascript">
+
+    const stocks = /*[[${stocks}]]*/ 'default';
+
+    const data = stocks.map((stock) => stock.price);
+
+    const ctx = document.getElementById("stockChart").getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+                "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
+            datasets: [
+                {
+                    label: "Stock Prices",
+                    borderColor: 'rgb(59,199,109)',
+                    lineTension: 0,
+                    fill: false,
+                    data: data,
+                },
+            ]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+</script>
+</body>
+</html>

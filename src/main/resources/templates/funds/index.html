@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!---------- @author Smit_Thakkar------------>
+
+</head>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+<main class="flex-shrink-0" role="main">
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Funds!</h1>
+        </div>
+    </div>
+</main>
+<h1>Available Funds:</h1>
+<div th:text="${userFunds}"></div>
+
+<h1>Enter the withdraw or deposit amount:</h1>
+
+
+<form th:object="${user}">
+    <input required="required" th:field="*{funds}" type="text">
+    <a th:href="@{/funds}">
+        <button type="button">Withdraw</button>
+    </a>
+</form>
+
+<p th:text="${user.getFunds()}"></p>
+<button type="button">Deposit</button>
+
+
+<script crossorigin="anonymous"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

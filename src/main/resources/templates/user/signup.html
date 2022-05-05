@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+
+<!-- @author Raj_Valand-->
+
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>User signup</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <style>
+        a:link, a:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid green;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: green;
+            color: white;
+        }
+
+        h3 {
+            text-indent: 50px;
+            letter-spacing: 3px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<a href="/sign_in">Go to Login Page</a>
+<a href="/admin_signin/">Admin Login Page</a> <br> <br>
+
+<h1>User signup</h1>
+
+<form action="#" method="post" th:action="@{/user_signup}" th:object="${user}">
+    <p>First name: <input required="required" th:field="*{firstName}" type="text"/></p>
+    <p>Last Name: <input required="required" th:field="*{lastName}" type="text"/></p>
+    <p>Email : <input required="required" th:field="*{email}" type="text"/></p>
+    <p>Password: <input required="required" th:field="*{password}" type="password"/></p>
+    <p>ResidentialId: <input required="required" th:field="*{residentialId}" type="text"/></p>
+    <p>Birthday: <input required="required" th:field="*{dateOfBirth}" type="date"/></p>
+
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
+
+
+<!--<p th:text="${message}"/>-->
+<!--<p th:text="${suggestedUsernames}"/>-->
+
+
+</body>
+</html>

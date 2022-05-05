@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+
+<!-- @author Raj_Valand-->
+
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Stock Sell</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <style>
+        a:link, a:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid green;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: green;
+            color: white;
+        }
+
+        h3 {
+            text-indent: 50px;
+            letter-spacing: 3px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Sell</h1>
+
+<form method="post" th:action="@{'/watchlisthome/sell/'+ ${id}}" th:object="${sell}">
+
+    <select th:field="*{is_regular_intraday}">
+        <option name="regular" value="regular">Regular</option>
+        <option name="intraday" value="intraday">Intraday</option>
+    </select>
+    <p>Quantity: <input name="quantity" required="required" th:field="*{quantity}" type="text"/></p>
+
+    <!--    <div  ><input th:field="*{is_limit_market}"  type="radio"  name="choice2" value="1"  />Limit <input th:field="*{is_limit_market}" type="radio" name="choice2" value="0" />Market</div>-->
+
+    <div th:object="${stock}">
+    </div>
+    <select th:field="*{is_limit_market}">
+        <option name="limit" value="Limit">Limit</option>
+        <option name="market" value="Market">Market</option>
+    </select>
+    <p>Stopless: <input name="stopless" th:field="*{stoploss}" type="text"/></p>
+    <p>Target <input name="target" th:field="*{target}" type="text"/></p>
+
+
+    <p>
+        <button type="submit">Sell</button>
+        <button>Cancel</button>
+    </p>
+</form>
+
+
+<!--<p th:text="${message}"/>-->
+<!--<p th:text="${suggestedUsernames}"/>-->
+
+
+</body>
+</html>

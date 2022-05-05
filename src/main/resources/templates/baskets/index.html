@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<!-- @author abhishekuppe -->
+
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div>
+
+    <div>
+        Baskets
+    </div>
+
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>%Change</td>
+                <td>Value</td>
+            </tr>
+            </thead>
+            <tbody th:each="basket : ${baskets}">
+            <tr>
+                <td th:text="${basket.getName()}"></td>
+                <td th:text="${basket.getChange()}"></td>
+                <td th:text="${basket.getPrice()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+
+    <div>Stocks</div>
+    <span th:each="stock : ${stocks}">
+        <div th:text="${stock.getName()}"></div>
+        <button th:attr="onclick=|addToBasket('${stock.id}', '${stock.name}', '${stock.price}')|">Add to basket</button>
+    </span>
+
+    <br/>
+    <br/>
+    <br/>
+    <form action="/baskets" method="post" th:object="${basket}">
+        <p> Basket Name<input required="required" th:field="*{name}" type="text">
+
+            <input id="basketValues" th:field="*{custom_table_value}" type="hidden"/>
+        <table border="1">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Value</td>
+                <td> Chart</td>
+                <td>Delete</td>
+            </tr>
+            </thead>
+            <tbody id="basketTable">
+            </tbody>
+        </table>
+
+        <button onclick="submitJSON()" type="submit">Submit</button>
+    </form>
+
+
+</div>
+
+<script>
+    function submitJSON() {
+        let string = "";
+        let table = document.getElementById("basketTable");
+        for (let i = 0; i < table.childElementCount; i++) {
+            if (i === table.childElementCount - 1) {
+                string += table.children[i].children[0].innerText
+            } else {
+                string += table.children[i].children[0].innerText + "_"
+            }
+        }
+        document.getElementById("basketValues").value = string;
+    }
+
+    function addToBasket(id, name, price) {
+        let tr = document.createElement("tr");
+
+        let td1 = document.createElement("td");
+        td1.innerText = id;
+
+        let td2 = document.createElement("td");
+        td2.innerText = name;
+
+        let td3 = document.createElement("td");
+        td3.innerText = price;
+
+        let td4 = document.createElement("td");
+        let chartButton = document.createElement("button");
+        let chartAnchorTag = document.createElement("a");
+        chartAnchorTag.innerText = "Chart"
+        chartAnchorTag.setAttribute("href", "/chart/" + id + "/");
+        chartAnchorTag.setAttribute("target", "_blank");
+        chartButton.append(chartAnchorTag);
+        td4.append(chartButton);
+
+        let td5 = document.createElement("td");
+        let deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.onclick = (e) => {
+            e.currentTarget.parentElement.parentElement.remove();
+        }
+
+        td5.append(deleteButton);
+        tr.append(td1);
+        tr.append(td2);
+        tr.append(td3);
+        tr.append(td4);
+        tr.append(td5);
+
+        document.getElementById("basketTable").append(tr);
+    }
+</script>
+
+<script crossorigin="anonymous"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

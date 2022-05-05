@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<!-- @author Raj_Valand-->
+
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <style>
+        .his {
+            position: absolute;
+            width: 750px;
+            height: 150px;
+            right: 0;
+            top: 10%;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="his">
+    <textarea cols="80" rows="10" th:text="${historyString}"></textarea>
+</div>
+<div>
+    <li>
+        <a class="nav-link" th:href="@{/logout}">Logout</a>
+    </li>
+</div>
+
+
+<main class="flex-shrink-0" role="main">
+    <div class="container mt-5">
+        <span th:each="stock : ${stocks}">
+            <form method="post" th:action="@{'/watchlisthome/'+ ${id}}" th:object="${stock}">
+                <span th:text="${stock.name}"></span>
+                <input th:attr="name='id'" th:value="${stock.getId()}" type="hidden"/>
+                <input th:attr="name='name'" th:value="${stock.getName()}" type="hidden"/>
+                <input th:attr="name='abbreviation'" th:value="${stock.getAbbreviation()}" type="hidden"/>
+                <input th:attr="name='initial_public_offering_date'" th:value="${stock.getInitialPublicOffering()}"
+                       type="hidden"/>
+                <input th:attr="name='buy_count'" th:value="${stock.getBuyCount()}" type="hidden"/>
+                <input th:attr="name='sell_count'" th:value="${stock.getSellCount()}" type="hidden"/>
+
+                <button type="submit">Get</button><br>
+            </form>
+        </span>
+    </div>
+
+</main>
+<ul>
+    <li><a class="navbar-brand" th:href="@{/watchlisthome/1}" th:method="get">Watchlist1</a></li>
+    <li><a class="navbar-brand" th:href="@{/watchlisthome/2}">Watchlist2</a></li>
+    <li><a class="navbar-brand" th:href="@{/watchlisthome/3}">Watchlist3</a></li>
+    <li><a class="navbar-brand" th:href="@{/watchlisthome/4}">Watchlist4</a></li>
+</ul>
+
+<table border="1" th:object="${s}">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Value</td>
+        <td>% Change</td>
+        <td> Buy</td>
+        <td> Sell</td>
+        <td> Chart</td>
+        <td> Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="stocks : ${s}">
+        <td th:text="${stocks.name}"></td>
+        <td th:text="${stocks.price}"></td>
+        <td th:text="${stocks.difference}"></td>
+        <!--        <td th:text="${price[__${stocks.id}__].price}"></td>-->
+        <td>
+
+            <form method="get" th:action="@{'/watchlisthome/buy/' + ${stocks.id}}">
+                <button type="submit">Buy</button>
+            </form>
+        </td>
+        <td>
+            <form method="get" th:action="@{'/watchlisthome/sell/' + ${stocks.id}}">
+                <button type="submit">Sell</button>
+            </form>
+        </td>
+        <td>
+            <button>Chart</button>
+        </td>
+        <td>
+            <button>Delete</button>
+        </td>
+
+    </tr>
+    </tbody>
+
+</table>
+<script crossorigin="anonymous"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

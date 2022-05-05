@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- @author abhishekuppe -->
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          rel="stylesheet">
+
+</head>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+<main class="flex-shrink-0" role="main">
+    <div class="container mt-5">
+        <table border="1">
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>%change</td>
+                <td>Value</td>
+                <td>Buy</td>
+                <td>Sell</td>
+                <td>Chart</td>
+            </tr>
+            </thead>
+            <tbody th:each="stock : ${stocks}">
+            <tr>
+                <td th:text="${stock.getName()}"></td>
+                <td th:text="${stock.getDifference()}"></td>
+                <td th:text="${stock.getPrice()}"></td>
+                <td>
+                    <button><a target="_blank" th:href="@{'/watchlisthome/buy/' + ${stock.getId()} +'/'}">Buy</a>
+                    </button>
+                </td>
+                <td>
+                    <button><a target="_blank" th:href="@{'/watchlisthome/sell/' + ${stock.getId()} +'/'}">Sell</a>
+                    </button>
+                </td>
+                <td>
+                    <button><a target="_blank" th:href="@{'/chart/' + ${stock.getId()} +'/'}">Chart</a></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+
+<script crossorigin="anonymous"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

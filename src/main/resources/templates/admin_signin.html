@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+
+<!-- @author Raj_Valand-->
+
+<html xmlns:thf="https://www.thymeleaf.org">
+<head>
+    <title>Admin signin</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <style>
+        a:link, a:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid green;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: green;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Admin Sign In</h1>
+<a href="/user_signup">User Signup Page</a>
+<a href="/auth/admin_signup">Admin Signup Page</a> <br> <br>
+
+<h1> Login Page</h1>
+
+
+<form action="/admin_home" method="post" thf:object="${user}">
+    Enter username: <input id="name" name="name" placeholder="userid" required="required" thf:field="*{email}"
+                           type="text"> <br>
+    Enter password: <input id="password" name="password" placeholder="password" required="required"
+                           thf:field="*{password}"
+                           type="password"
+><br><br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+</body>
+</html>
