@@ -28,6 +28,8 @@ The application is built using the Model-View-Controller (MVC) architectural pat
 *   **`models`**: Plain Old Java Objects (POJOs) that represent the application's data entities (e.g., User, Stock, Order).
 *   **`database`**: Provides utility classes for establishing and managing database connections.
 *   **`templates`**: Thymeleaf templates for rendering the dynamic HTML pages.
+  <img width="1726" height="553" alt="image" src="https://github.com/user-attachments/assets/2145f0e4-58a9-4fb9-9a47-c1481c478111" />
+
 
 ## Technologies Used
 
